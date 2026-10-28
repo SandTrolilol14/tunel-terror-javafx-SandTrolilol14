@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- ESQUELETO PROVISIONAL. PARTE 2 (vista): rehacer con Scene Builder respetando fx:id y styleClass. -->
+<StackPane fx:id="raiz" styleClass="raiz" prefWidth="1280" prefHeight="720"
+           xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="es.medac.sandtrolilol14.tunel.SalaController">
+
+    <VBox fx:id="panelRadio" styleClass="radio" alignment="CENTER" spacing="20" maxWidth="900" maxHeight="500">
+        <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
+        <Label fx:id="lblTitulo" styleClass="titulo" text="EMISORA SIN NOMBRE"/>
+        <Label fx:id="lblInstruccion" styleClass="instruccion" text="Gira el dial. Encuentra la frecuencia. Escúchala."/>
+        <Label fx:id="lblFrecuencia" styleClass="frecuencia" text="--.- MHz"/>
+        <Slider fx:id="sldDial" styleClass="dial" showTickMarks="false" showTickLabels="false"/>
+        <ProgressBar fx:id="pbSenal" styleClass="senal" progress="0" maxWidth="Infinity"/>
+        <Label fx:id="lblAyuda" styleClass="ayuda" visible="false" wrapText="true"/>
+    </VBox>
+
+    <Label fx:id="lblLetra" styleClass="letra" text="I" visible="false" mouseTransparent="true"/>
+
+    <ImageView fx:id="imgSusto" visible="false" mouseTransparent="true" preserveRatio="true" fitHeight="600">
+        <Image url="@img/susto.png"/>
+    </ImageView>
+</StackPane>
