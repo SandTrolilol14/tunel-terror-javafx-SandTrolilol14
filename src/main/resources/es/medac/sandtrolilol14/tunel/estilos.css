@@ -1,19 +1,180 @@
-/* ESQUELETO PROVISIONAL. PARTE 3 (estilo): rehacer el tema oscuro completo. */
+/* ==========================================================================
+   SALA 2: RADIO FANTASMA - TEMA OSCURO Y ESTÉTICA DE RADIO ANTIGUA EMBRUJADA
+   ========================================================================== */
 
 .raiz {
-    -fx-background-color: #050505;
+    -fx-background-color: radial-gradient(center 50% 50%, radius 75%, #171311 0%, #0b0908 65%, #040303 100%);
+    -fx-padding: 30px;
+}
+
+.raiz.sintonizada {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 80%, #2b0909 0%, #120404 65%, #050101 100%);
 }
 
 .radio {
-    -fx-background-color: #1a1410;
-    -fx-background-radius: 16;
+    -fx-background-color: linear-gradient(to bottom, #2b1d14 0%, #1c120c 50%, #120b07 100%);
+    -fx-background-radius: 22px;
+    -fx-border-color: #4a3525 #261910 #1a110b #3d2b1d;
+    -fx-border-width: 6px;
+    -fx-border-radius: 20px;
+    -fx-padding: 36px 48px 36px 48px;
+    -fx-spacing: 20px;
+    -fx-max-width: 780px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.92), 45, 0.4, 0, 15);
 }
 
-.titulo, .instruccion, .frecuencia, .ayuda {
-    -fx-text-fill: #c8c0b0;
+.raiz.sintonizada .radio {
+    -fx-border-color: #6e1515;
+    -fx-effect: dropshadow(gaussian, rgba(160, 15, 15, 0.65), 50, 0.35, 0, 0);
+}
+
+.titulo {
+    -fx-font-family: "Creepster", "Georgia", serif;
+    -fx-font-size: 54px;
+    -fx-text-fill: #d9a05b;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.95), 10, 0.5, 0, 3);
+}
+
+.raiz.sintonizada .titulo {
+    -fx-text-fill: #e04a3f;
+}
+
+.instruccion {
+    -fx-font-family: "System", sans-serif;
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f5ebd6;
+    -fx-background-color: rgba(10, 7, 5, 0.65);
+    -fx-background-radius: 8px;
+    -fx-border-color: #523b29;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 20px 10px 20px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.frecuencia {
+    -fx-font-family: "Share Tech Mono", "Consolas", "Monospaced", monospace;
+    -fx-font-size: 64px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #66ff88;
+    -fx-background-color: linear-gradient(to bottom, #060d08 0%, #0b170e 50%, #050a06 100%);
+    -fx-background-radius: 10px;
+    -fx-border-color: #2f3e32 #141c16 #141c16 #2f3e32;
+    -fx-border-width: 4px;
+    -fx-border-radius: 10px;
+    -fx-padding: 14px 36px 14px 36px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.95), 18, 0.4, 0, 4);
+}
+
+.raiz.sintonizada .frecuencia {
+    -fx-text-fill: #ff4d4d;
+    -fx-background-color: linear-gradient(to bottom, #140505 0%, #210909 50%, #0d0303 100%);
+    -fx-border-color: #5c1818;
+}
+
+.dial {
+    -fx-padding: 16px 10px 16px 10px;
+    -fx-pref-width: 580px;
+    -fx-cursor: hand;
+}
+
+.dial .track {
+    -fx-background-color: linear-gradient(to bottom, #090604 0%, #1c140e 60%, #2e2118 100%);
+    -fx-background-radius: 8px;
+    -fx-border-color: #4a3728;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-pref-height: 18px;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.9), 10, 0.3, 0, 2);
+}
+
+.dial .thumb {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, #d49548 0%, #8c5820 75%, #3d220a 100%);
+    -fx-background-radius: 20px;
+    -fx-border-color: #f5cb86;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+    -fx-pref-width: 38px;
+    -fx-pref-height: 38px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.85), 12, 0.4, 0, 3);
+}
+
+.dial .thumb:hover,
+.dial .thumb:pressed {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 65%, #efb366 0%, #a86b28 75%, #4d2c0e 100%);
+    -fx-border-color: #ffe2b0;
+}
+
+.senal {
+    -fx-pref-width: 520px;
+    -fx-pref-height: 24px;
+}
+
+.senal .track {
+    -fx-background-color: #0c0a08;
+    -fx-background-radius: 6px;
+    -fx-border-color: #3d2e22;
+    -fx-border-width: 2px;
+    -fx-border-radius: 6px;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.9), 8, 0.3, 0, 2);
+}
+
+.senal .bar {
+    -fx-background-color: linear-gradient(to right, #593816 0%, #c9882c 55%, #66ff88 100%);
+    -fx-background-insets: 3px;
+    -fx-background-radius: 4px;
+}
+
+.raiz.sintonizada .senal .bar {
+    -fx-background-color: linear-gradient(to right, #5e1111 0%, #b81d1d 60%, #ff3b3b 100%);
+}
+
+.ayuda {
+    -fx-font-family: "System", sans-serif;
+    -fx-font-size: 19px;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffd27d;
+    -fx-background-color: rgba(24, 14, 7, 0.88);
+    -fx-background-radius: 8px;
+    -fx-border-color: #8c5d2b;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 18px 10px 18px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }
 
 .letra {
-    -fx-text-fill: #8b0000;
-    -fx-font-size: 250px;
+    -fx-font-family: "Creepster", "Georgia", serif;
+    -fx-font-size: 260px;
+    -fx-font-weight: bold;
+    -fx-text-fill: linear-gradient(to bottom, #ff2a2a 0%, #b30000 65%, #590000 100%);
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.98), 35, 0.65, 0, 8);
+}
+
+.altavoz {
+    -fx-background-color: repeating-linear-gradient(to bottom, #0b0806 0px, #0b0806 4px, #1f1610 5px, #1f1610 8px);
+    -fx-background-radius: 10px;
+    -fx-border-color: #362519;
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-min-height: 45px;
+}
+
+.decoracion {
+    -fx-text-fill: #7d6249;
+    -fx-font-family: "Share Tech Mono", monospace;
+    -fx-font-size: 13px;
+    -fx-border-color: #38281c;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
 }
