@@ -1,4 +1,4 @@
-package es.medac.sandtrolilol14.tunel.sonido;
+package sonido;
 
 public class GestorSonido {
     public GestorSonido() {
