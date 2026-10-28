@@ -1,0 +1,19 @@
+/* ESQUELETO PROVISIONAL. PARTE 3 (estilo): rehacer el tema oscuro completo. */
+
+.raiz {
+    -fx-background-color: #050505;
+}
+
+.radio {
+    -fx-background-color: #1a1410;
+    -fx-background-radius: 16;
+}
+
+.titulo, .instruccion, .frecuencia, .ayuda {
+    -fx-text-fill: #c8c0b0;
+}
+
+.letra {
+    -fx-text-fill: #8b0000;
+    -fx-font-size: 250px;
+}
