@@ -29,7 +29,7 @@
 }
 
 .titulo {
-    -fx-font-family: "Creepster", "Georgia", serif;
+    -fx-font-family: "Creepster";
     -fx-font-size: 54px;
     -fx-text-fill: #d9a05b;
     -fx-alignment: center;
@@ -57,7 +57,7 @@
 }
 
 .frecuencia {
-    -fx-font-family: "Share Tech Mono", "Consolas", "Monospaced", monospace;
+    -fx-font-family: "Share Tech Mono";
     -fx-font-size: 64px;
     -fx-font-weight: bold;
     -fx-text-fill: #66ff88;
@@ -152,7 +152,7 @@
 }
 
 .letra {
-    -fx-font-family: "Creepster", "Georgia", serif;
+    -fx-font-family: "Creepster";
     -fx-font-size: 260px;
     -fx-font-weight: bold;
     -fx-text-fill: linear-gradient(to bottom, #ff2a2a 0%, #b30000 65%, #590000 100%);
