@@ -22,6 +22,14 @@ public class SalaController {
     private static final Duration TIEMPO_AYUDA = Duration.seconds(60);
     private static final Duration TIEMPO_PIEDAD = Duration.seconds(90);
     private static final Duration LETRA_VISIBLE = Duration.seconds(10);
+    private static final Duration TIEMPO_SINTONIA = Duration.seconds(2.5);
+
+    private static final double DIST_RANGO = 8.0;
+    private static final double DIST_CERCA = 4.0;
+
+    private static final String TEXTO_ALEJANDO = "Se pierde la señal... prueba en la otra dirección.";
+    private static final String TEXTO_ACERCANDO = "Te estás acercando...";
+    private static final String TEXTO_CERCA = "¡Estás muy cerca!";
 
     @FXML private StackPane raiz;
     @FXML private VBox panelRadio;
@@ -38,6 +46,9 @@ public class SalaController {
     private final GestorSonido sonido = new GestorSonido();
     private RelojPiedad relojAyuda;
     private RelojPiedad relojPiedad;
+    private RelojPiedad relojSintonia;
+    private static final double HOLGURA_MANTENER = 2.0;
+    private static final String TEXTO_MANTENIENDO= "Frecuencia localizada... ¡no muevas el dial!";
 
     /** true desde que el grupo toca el dial por primera vez. */
     private boolean partidaEmpezada;
@@ -46,6 +57,9 @@ public class SalaController {
     /** true cuando el propio código mueve el dial (al reiniciar), para no tomarlo como un movimiento del visitante. */
     private boolean moviendoPorCodigo;
 
+    private String textoPista;
+
+    private String textoCercania="";
     @FXML
     private void initialize() {
         sldDial.setMin(Sintonizador.MINIMO);
@@ -53,11 +67,20 @@ public class SalaController {
 
         relojAyuda = new RelojPiedad(TIEMPO_AYUDA, this::mostrarAyuda);
         relojPiedad = new RelojPiedad(TIEMPO_PIEDAD, this::apiadarse);
+        relojSintonia = new RelojPiedad(TIEMPO_SINTONIA, this::completarSintonia);
+
 
         sldDial.valueProperty().addListener((obs, antes, ahora) -> alMoverDial(ahora.doubleValue()));
 
         sonido.iniciarAmbiente();
         reiniciar();
+    }
+
+    private void completarSintonia() {
+        if (resuelta) {
+        return;
+    }
+        revelarLetra(false);
     }
 
     /** Cada movimiento del dial: frecuencia, barra de señal, sonido y comprobación. */
@@ -78,10 +101,62 @@ public class SalaController {
         sonido.actualizarSenal(intensidad);
         sonido.chasquido();
 
-        if (sintonizador.estaSintonizada(valor)) {
-            revelarLetra(false);
+        if (relojSintonia.estaEnMarcha()) {
+            // Ya está enganchado a la frecuencia: solo se pierde si se aleja demasiado
+            if (distanciaAlObjetivo(valor) > Sintonizador.TOLERANCIA * HOLGURA_MANTENER) {
+                relojSintonia.parar();
+                actualizarCercania(valor);
+            }
+        } else if (sintonizador.estaSintonizada(valor)) {
+            // Acaba de encontrarla: empieza la cuenta atrás, hay que mantenerla
+            relojSintonia.iniciar();
+            textoCercania = TEXTO_MANTENIENDO;
+            refrescarAyuda();
+        } else {
+            actualizarCercania(valor);
         }
     }
+
+    private void actualizarCercania(double valor){
+        double distancia= distanciaAlObjetivo(valor);
+
+        String nuevo;
+        if(distancia<=DIST_CERCA){
+            nuevo=TEXTO_CERCA;
+        } else if (distancia<=DIST_RANGO) {
+            nuevo=TEXTO_ACERCANDO;
+        }else{
+            nuevo= textoCercania.isEmpty() ? "" :TEXTO_ALEJANDO;
+        }
+
+        if (!nuevo.equals(textoCercania)){
+            textoCercania=nuevo;
+            refrescarAyuda();
+        }
+    }
+
+    private double distanciaAlObjetivo(double valor) {
+        return Math.abs(sintonizador.frecuenciaMostrada(valor) - Sintonizador.FRECUENCIA_OBJETIVO);
+    }
+
+    private void refrescarAyuda(){
+        String texto;
+        if (textoPista != null && !textoCercania.isEmpty()) {
+            texto = textoCercania + "\n" + textoPista;
+        } else if (textoPista != null) {
+            texto = textoPista;
+        } else {
+            texto = textoCercania;
+        }
+        if (texto.isEmpty()) {
+            return;
+        }
+        lblAyuda.setText(texto);
+        if (!lblAyuda.isVisible()) {
+            Efectos.aparecer(lblAyuda);
+        }
+    }
+
 
     /** A los 60 s sin resolver: pista. */
     private void mostrarAyuda() {
@@ -97,7 +172,7 @@ public class SalaController {
         if (resuelta) {
             return;
         }
-        lblAyuda.setText("La emisora se apiada de vosotros...");
+        lblAyuda.setText("La emisora se apiadia de vosotros...");
         if (!lblAyuda.isVisible()) {
             Efectos.aparecer(lblAyuda);
         }
