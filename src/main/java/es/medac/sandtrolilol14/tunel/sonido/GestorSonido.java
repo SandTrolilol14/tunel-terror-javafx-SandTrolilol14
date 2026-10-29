@@ -25,6 +25,10 @@ public class GestorSonido {
     private long ultimaVezChasquido = 0;
     private static final long INTERVALO_MINIMO_NS = 80_000_000L; // 80 milisegundos en nanosegundos
 
+    // Volumen base del ambiente y cuánto se apaga todo al estar sintonizado (0.9 = queda al 10 %).
+    private static final double VOLUMEN_AMBIENTE = 0.45;
+    private static final double ATENUACION_MAXIMA = 0.9;
+
     /**
      * Constructor: carga todos los recursos de audio de forma segura.
      * Si algún archivo falla o no se encuentra, avisa por consola pero permite que la app continúe.
@@ -36,7 +40,7 @@ public class GestorSonido {
             if (url != null) {
                 ambientePlayer = new MediaPlayer(new Media(url.toExternalForm()));
                 ambientePlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                ambientePlayer.setVolume(0.45);
+                ambientePlayer.setVolume(VOLUMEN_AMBIENTE);
             } else {
                 System.err.println("Aviso: No se encontró el archivo de audio ambiente.mp3");
             }
@@ -128,7 +132,7 @@ public class GestorSonido {
     }
 
     /**
-     * Actualiza el volumen de la estática y los susurros en función de la proximidad a la frecuencia correcta.
+     * Actualiza el volumen de la estática, los susurros y el ambiente en función de la proximidad a la frecuencia correcta.
      * @param intensidad Valor entre 0.0 (muy lejos) y 1.0 (totalmente sintonizado).
      */
     public void actualizarSenal(double intensidad) {
@@ -148,9 +152,18 @@ public class GestorSonido {
             }
         }
 
-        // Susurros: aumentan conforme nos acercamos al objetivo
+        // Atenuación general: 1.0 lejos de la frecuencia, 0.1 con el dial sintonizado.
+        // Así el sonido se va apagando al acercarse y queda casi en silencio justo antes del susto.
+        double atenuacion = 1.0 - ATENUACION_MAXIMA * intensidadLimitada;
+
+        // Ambiente: se apaga conforme nos acercamos al objetivo
+        if (ambientePlayer != null) {
+            ambientePlayer.setVolume(VOLUMEN_AMBIENTE * atenuacion);
+        }
+
+        // Susurros: emergen de la estática al acercarse, pero también se apagan al sintonizar
         if (susurrosPlayer != null) {
-            double volSusurros = 0.8 * intensidadLimitada;
+            double volSusurros = 0.8 * intensidadLimitada * atenuacion;
             susurrosPlayer.setVolume(Math.min(0.8, volSusurros));
         }
     }
