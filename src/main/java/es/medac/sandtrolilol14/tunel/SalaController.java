@@ -163,8 +163,8 @@ public class SalaController {
         if (resuelta) {
             return;
         }
-        lblAyuda.setText(sintonizador.textoAyuda());
-        Efectos.aparecer(lblAyuda);
+        textoPista = sintonizador.textoAyuda();
+        refrescarAyuda();
     }
 
     /** A los 90 s sin resolver: la sala se apiada y da la letra. */
@@ -172,7 +172,7 @@ public class SalaController {
         if (resuelta) {
             return;
         }
-        lblAyuda.setText("La emisora se apiadia de vosotros...");
+        lblAyuda.setText("La emisora se apiada de vosotros...");
         if (!lblAyuda.isVisible()) {
             Efectos.aparecer(lblAyuda);
         }
@@ -206,6 +206,13 @@ public class SalaController {
     public void reiniciar() {
         resuelta = false;
         partidaEmpezada = false;
+
+        textoPista = null;
+        textoCercania = "";
+        if (relojSintonia != null) {
+            relojSintonia.parar();
+        }
+
         if (relojAyuda != null) {
             relojAyuda.parar();
         }
@@ -230,6 +237,10 @@ public class SalaController {
 
     /** Libera los recursos al cerrar la aplicación. */
     public void cerrar() {
+
+        if (relojSintonia != null) {
+            relojSintonia.parar();
+        }
         if (relojAyuda != null) {
             relojAyuda.parar();
         }
